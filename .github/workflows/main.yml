@@ -32,7 +32,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - uses: azure/docker-login@v1
-      if: github.branch == 'dev' || github.branch == 'master'
+        if: github.branch == 'dev' || github.branch == 'master'
         with:
           username: ${{ secrets.DOCKER_HUB_USERNAME }}
           password: ${{ secrets.DOCKER_HUB_PASSWORD }}
