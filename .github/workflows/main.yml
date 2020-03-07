@@ -27,21 +27,25 @@ jobs:
 
   build_docker_hub:
     runs-on: ubuntu-latest
+    needs: [test]
 
     steps:
       - uses: actions/checkout@v2
       - uses: azure/docker-login@v1
+      if: github.branch == 'dev' || github.branch == 'master'
         with:
           username: ${{ secrets.DOCKER_HUB_USERNAME }}
           password: ${{ secrets.DOCKER_HUB_PASSWORD }}
       - name: Build the Docker image
         run: docker build . --tag kwizapp/metadata-service:latest
       - name: Push the Docker image to Docker Hub
+        if: github.branch == 'dev' || github.branch == 'master'
         run: docker push kwizapp/metadata-service
 
   build_heroku:
     runs-on: ubuntu-latest
     needs: test
+    if: github.branch == 'dev' || github.branch == 'master'
 
     steps:
       - uses: actions/checkout@v2
@@ -60,6 +64,7 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     needs: [test, build_heroku]
+    if: github.branch == 'dev' || github.branch == 'master'
 
     steps:
       - name: Login to Heroku
