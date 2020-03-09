@@ -18,7 +18,9 @@
     "test": "ava"
   },
   "dependencies": {
-    "micro": "^9.3.4"
+    "dotenv": "^8.2.0",
+    "micro": "^9.3.4",
+    "pg": "^7.18.2"
   },
   "devDependencies": {
     "ava": "^3.5.0",
