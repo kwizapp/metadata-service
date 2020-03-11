@@ -1,0 +1,31 @@
+{
+  "name": "metadata-service",
+  "version": "0.0.1",
+  "description": "Movie metadata microservice for usage by Kwiz",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kwizapp/metadata-service.git"
+  },
+  "maintainers": [
+    "Alex Scheitlin <alex.scheitlin@uzh.ch>",
+    "Roland Schlaefli <rolandschlaefli@gmail.com>",
+    "Nik Zaugg <nik.zaugg@uzh.ch>"
+  ],
+  "license": "MIT",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "micro src/index.js",
+    "test": "ava"
+  },
+  "dependencies": {
+    "dotenv": "8.2.0",
+    "micro": "9.3.4",
+    "pg": "7.18.2"
+  },
+  "devDependencies": {
+    "ava": "3.5.0",
+    "request": "2.88.2",
+    "request-promise": "4.2.5",
+    "test-listen": "1.1.0"
+  }
+}
