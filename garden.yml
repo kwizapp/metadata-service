@@ -1,0 +1,17 @@
+kind: Module
+name: metadata-service
+description: Movie Metadata Microservice
+type: container
+services:
+  - name: metadata-service
+    ports:
+      - name: http
+        containerPort: 5000
+    ingresses:
+      - path: /
+        port: http
+    env:
+      PORT: 5000
+tests:
+  - name: unit
+    args: [npm, run, test]
