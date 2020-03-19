@@ -1,5 +1,6 @@
 const { createError } = require('micro')
 const { parse } = require('url')
+const { validateId } = require('@kwizapp/kwiz-utils')
 
 const dbService = require('./dbService')
 
@@ -10,8 +11,9 @@ module.exports = async (req, res) => {
   try {
     const { query } = parse(req.url, true)
 
-    // TODO: validate the imdb id, set null if invalid
+    // validate the imdb id and throw if it is invalid
     imdbId = query.id
+    validateId(createError, imdbId)
   } catch (e) {
     console.error(e)
     throw createError(422, 'INVALID_PARAMETERS', e)
