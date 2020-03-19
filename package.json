@@ -19,6 +19,7 @@
     "test": "ava"
   },
   "dependencies": {
+    "@kwizapp/kwiz-utils": "0.0.1",
     "dotenv": "8.2.0",
     "micro": "9.3.4",
     "pg": "7.18.2"
