@@ -41,7 +41,7 @@ jobs:
           username: ${{ secrets.DOCKER_HUB_USERNAME }}
           password: ${{ secrets.DOCKER_HUB_PASSWORD }}
       - name: Build the Docker image
-        run: docker build . --tag kwizapp/metadata-service:latest
+        run: docker build . --tag kwizapp/metadata-service:latest --build-arg NODE_AUTH_TOKEN=${{ secrets.GITHUB_TOKEN }}
       - name: Push the Docker image to Docker Hub
         if: github.branch == 'dev' || github.branch == 'master'
         run: docker push kwizapp/metadata-service
@@ -61,7 +61,7 @@ jobs:
           username: _
           password: ${{ secrets.HEROKU_API_KEY }}
       - name: Build the Docker image
-        run: docker build . --cache-from kwizapp/metadata-service:latest --tag registry.heroku.com/kwiz-metadata-service/web
+        run: docker build . --cache-from kwizapp/metadata-service:latest --tag registry.heroku.com/kwiz-metadata-service/web --build-arg NODE_AUTH_TOKEN=${{ secrets.GITHUB_TOKEN }}
       - name: Push the Docker image to Heroku
         run: docker push registry.heroku.com/kwiz-metadata-service/web
 
