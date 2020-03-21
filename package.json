@@ -26,9 +26,10 @@
   },
   "devDependencies": {
     "ava": "3.5.0",
+    "jest": "^25.1.0",
+    "micro-dev": "3.0.0",
     "request": "2.88.2",
     "request-promise": "4.2.5",
-    "test-listen": "1.1.0",
-    "micro-dev": "3.0.0"
+    "test-listen": "1.1.0"
   }
 }
