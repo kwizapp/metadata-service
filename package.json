@@ -16,7 +16,8 @@
   "scripts": {
     "dev": "micro-dev src/index.js",
     "start": "micro src/index.js",
-    "test": "ava"
+    "test": "jest",
+    "test:watch": "jest -w"
   },
   "dependencies": {
     "@kwizapp/kwiz-utils": "0.0.2",
@@ -25,11 +26,32 @@
     "pg": "7.18.2"
   },
   "devDependencies": {
-    "ava": "3.5.0",
-    "jest": "^25.1.0",
+    "jest": "25.1.0",
     "micro-dev": "3.0.0",
     "request": "2.88.2",
     "request-promise": "4.2.5",
     "test-listen": "1.1.0"
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "testRegex": "(/__tests__/.*|\\.(test|spec))\\.js$",
+    "moduleFileExtensions": [
+      "js"
+    ],
+    "coveragePathIgnorePatterns": [
+      "/node_modules/",
+      "/test/"
+    ],
+    "coverageThreshold": {
+      "global": {
+        "branches": 90,
+        "functions": 95,
+        "lines": 95,
+        "statements": 95
+      }
+    },
+    "collectCoverageFrom": [
+      "src/*.js"
+    ]
   }
 }

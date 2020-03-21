@@ -39,6 +39,6 @@ module.exports = async (req, res) => {
     console.error(e)
     throw createError(500, 'COULD_NOT_FETCH_MOVIE', e)
   } finally {
-    // client.end()
+    client.end()
   }
 }
