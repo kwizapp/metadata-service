@@ -17,7 +17,7 @@
     "dev": "micro-dev src/index.js",
     "start": "micro src/index.js",
     "test": "jest",
-    "test:watch": "jest -w"
+    "test:watch": "jest --watch"
   },
   "dependencies": {
     "@kwizapp/kwiz-utils": "0.0.2",
@@ -26,10 +26,10 @@
     "pg": "7.18.2"
   },
   "devDependencies": {
+    "axios": "0.19.2",
     "jest": "25.1.0",
     "micro-dev": "3.0.0",
-    "request": "2.88.2",
-    "request-promise": "4.2.5",
+    "prettier": "2.0.1",
     "test-listen": "1.1.0"
   },
   "jest": {

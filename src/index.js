@@ -4,19 +4,18 @@ const { validateId } = require('@kwizapp/kwiz-utils')
 
 const dbService = require('./dbService')
 
-module.exports = async (req, res) => {
+module.exports = async req => {
   let imdbId
 
-  // parse the request query params
   try {
+    // try to extract query params from the request URL
     const { query } = parse(req.url, true)
-
-    // validate the imdb id and throw if it is invalid
     imdbId = query.id
+  } catch (e) {}
+
+  // if the imdbId has been set, ensure that it is valid
+  if (typeof imdbId !== 'undefined') {
     validateId(createError, imdbId)
-  } catch (e) {
-    console.error(e)
-    throw createError(422, 'INVALID_PARAMETERS', e)
   }
 
   // setup a database connection
@@ -38,7 +37,5 @@ module.exports = async (req, res) => {
   } catch (e) {
     console.error(e)
     throw createError(500, 'COULD_NOT_FETCH_MOVIE', e)
-  } finally {
-    client.end()
   }
 }
