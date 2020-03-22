@@ -11,11 +11,20 @@ This service is responsible for returning metadata for specific movies. It uses 
 
 ## Development
 
+### Login to NPM registry
+
+We use a library provided by our organization, namely `kwiz-utils`. For npm to find the package, do the following:
+
+- Login to Github Package Registry using npm login --registry=https://npm.pkg.github.com and your credentials.
+  - Any provided access token will need at least the repo and read:packages scope.
+
+After that, `npm install` should run without any problems.
+
 ### Environment Variables
 
-- create a `.env` file based on `.env.template`
-- add the DATABASE_URL
-  - you can get the url from heroku inside the `poster-service` app addons
+- Create a `.env` file based on `.env.template`
+- Add the `DATABASE_URL` to `.env`
+  - You can get the url from heroku inside the `metadata-service` app addons
 
 ### Local dev with `micro-dev`
 
@@ -67,5 +76,3 @@ This will the micro HTTP service on PORT 3000.
 ```bash
 npm run test
 ```
-
-For testing, we use the suggested test-runner [ava](https://github.com/avajs/ava).
