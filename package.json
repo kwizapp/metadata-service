@@ -17,6 +17,7 @@
     "dev": "micro-dev src/index.js",
     "start": "micro src/index.js",
     "test": "jest",
+    "test:handles": "jest --detectOpenHandles",
     "test:watch": "jest --watch"
   },
   "dependencies": {
