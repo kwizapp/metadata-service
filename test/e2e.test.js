@@ -44,49 +44,25 @@ describe('metadata-service', () => {
   it('fetches a random movie if no ImdbID is given', async () => {
     const response = await request(micro(server)).get('/')
     expect(response.statusCode).toEqual(200)
-    expect(response.body).toMatchInlineSnapshot(
-      {
-        budget: expect.any(String),
-        date_segment: expect.any(String),
-        homepage: expect.any(String),
-        imdb_id: expect.any(String),
-        original_language: expect.any(String),
-        original_title: expect.any(String),
-        overview: expect.any(String),
-        popularity: expect.any(Number),
-        poster_path: expect.any(String),
-        release_date: expect.any(String),
-        revenue: expect.any(Number),
-        runtime: expect.any(Number),
-        status: expect.any(String),
-        tagline: expect.any(String),
-        title: expect.any(String),
-        video: expect.any(Boolean),
-        vote_average: expect.any(Number),
-        vote_count: expect.any(Number),
-      },
-      `
-        Object {
-          "budget": Any<String>,
-          "date_segment": Any<String>,
-          "homepage": Any<String>,
-          "imdb_id": Any<String>,
-          "original_language": Any<String>,
-          "original_title": Any<String>,
-          "overview": Any<String>,
-          "popularity": Any<Number>,
-          "poster_path": Any<String>,
-          "release_date": Any<String>,
-          "revenue": Any<Number>,
-          "runtime": Any<Number>,
-          "status": Any<String>,
-          "tagline": Any<String>,
-          "title": Any<String>,
-          "video": Any<Boolean>,
-          "vote_average": Any<Number>,
-          "vote_count": Any<Number>,
-        }
-      `
-    )
+    expect(response.body).toMatchObject({
+      budget: expect.any(String),
+      date_segment: expect.any(String),
+      homepage: expect.any(String),
+      imdb_id: expect.any(String),
+      original_language: expect.any(String),
+      original_title: expect.any(String),
+      overview: expect.any(String),
+      popularity: expect.any(Number),
+      poster_path: expect.any(String),
+      release_date: expect.any(String),
+      revenue: expect.any(Number),
+      runtime: expect.any(Number),
+      status: expect.any(String),
+      tagline: expect.any(String),
+      title: expect.any(String),
+      video: expect.any(Boolean),
+      vote_average: expect.any(Number),
+      vote_count: expect.any(Number),
+    })
   })
 })
