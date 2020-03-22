@@ -1,36 +1,20 @@
-const micro = require("micro");
-const listen = require("test-listen");
-const axios = require("axios");
+const micro = require('micro')
+const request = require('supertest')
 
-const server = require("../src/index");
+const server = require('../src/index')
 
-describe("metadata-service", () => {
-  let service;
-  let url;
+describe('metadata-service', () => {
+  it('fails if an invalid ImdbID is specified', async () => {
+    await request(micro(server)).get('/?id=123').expect(400)
+  })
 
-  beforeAll(async () => {
-    service = micro(server);
-    url = await listen(service);
-    console.log(`> Started test service at ${url}`);
-  });
+  it('fails if a non-existent ImdbID is specified', async () => {
+    await request(micro(server)).get('/?id=tt1234567').expect(404)
+  })
 
-  it("throws if an invalid ImdbID is specified", async () => {
-    const request = axios.get(`${url}/?id=123`);
-    await expect(request).rejects.toThrow(
-      "Request failed with status code 400"
-    );
-  });
-
-  it("throws if a non-existent ImdbID is specified", async () => {
-    const request = axios.get(`${url}/?id=tt1234567`);
-    await expect(request).rejects.toThrow(
-      "Request failed with status code 404"
-    );
-  });
-
-  it("fetches a specific movie given an ImdbID", async () => {
-    const response = await axios.get(`${url}/?id=tt0076759`);
-    expect(response.data).toMatchInlineSnapshot(`
+  it('fetches a specific movie given an ImdbID', async () => {
+    const response = await request(micro(server)).get('/?id=tt0076759')
+    expect(response.body).toMatchInlineSnapshot(`
       Object {
         "budget": "11000000",
         "date_segment": "0",
@@ -51,56 +35,30 @@ describe("metadata-service", () => {
         "vote_average": 8.1,
         "vote_count": 6778,
       }
-    `);
-  });
+    `)
+  })
 
-  it("fetches a random movie if no ImdbID is given", async () => {
-    const response = await axios.get(`${url}/`);
-    expect(response.data).toMatchInlineSnapshot(
-      {
-        budget: expect.any(String),
-        date_segment: expect.any(String),
-        homepage: expect.any(String),
-        imdb_id: expect.any(String),
-        original_language: expect.any(String),
-        original_title: expect.any(String),
-        overview: expect.any(String),
-        popularity: expect.any(Number),
-        poster_path: expect.any(String),
-        release_date: expect.any(String),
-        revenue: expect.any(Number),
-        runtime: expect.any(Number),
-        status: expect.any(String),
-        tagline: expect.any(String),
-        title: expect.any(String),
-        video: expect.any(Boolean),
-        vote_average: expect.any(Number),
-        vote_count: expect.any(Number),
-      },
-      `
-Object {
-  "budget": Any<String>,
-  "date_segment": Any<String>,
-  "homepage": Any<String>,
-  "imdb_id": Any<String>,
-  "original_language": Any<String>,
-  "original_title": Any<String>,
-  "overview": Any<String>,
-  "popularity": Any<Number>,
-  "poster_path": Any<String>,
-  "release_date": Any<String>,
-  "revenue": Any<Number>,
-  "runtime": Any<Number>,
-  "status": Any<String>,
-  "tagline": Any<String>,
-  "title": Any<String>,
-  "video": Any<Boolean>,
-  "vote_average": Any<Number>,
-  "vote_count": Any<Number>,
-}
-`
-    );
-  });
-
-  afterAll(() => service.close());
-});
+  it('fetches a random movie if no ImdbID is given', async () => {
+    const response = await request(micro(server)).get('/')
+    expect(response.body).toMatchSnapshot({
+      budget: expect.any(String),
+      date_segment: expect.any(String),
+      homepage: expect.any(String),
+      imdb_id: expect.any(String),
+      original_language: expect.any(String),
+      original_title: expect.any(String),
+      overview: expect.any(String),
+      popularity: expect.any(Number),
+      poster_path: expect.any(String),
+      release_date: expect.any(String),
+      revenue: expect.any(Number),
+      runtime: expect.any(Number),
+      status: expect.any(String),
+      tagline: expect.any(String),
+      title: expect.any(String),
+      video: expect.any(Boolean),
+      vote_average: expect.any(Number),
+      vote_count: expect.any(Number),
+    })
+  })
+})
