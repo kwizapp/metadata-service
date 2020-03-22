@@ -31,14 +31,15 @@ async function fetchMovieById(client, imdbId) {
   const MOVIE_QUERY = 'SELECT * FROM movies WHERE imdb_id = $1'
   const result = await client.query(MOVIE_QUERY, [imdbId])
 
+  // if we have data, return the result and disconnect from
+  // the database, as we only do a single db request
+  client.end()
+
   // if the result is empty, we do not know about this movie
   if (!result.rows || result.rows.length === 0) {
     throw createError(404, 'MOVIE_ID_NOT_AVAILABLE')
   }
 
-  // if we have data, return the result and disconnect from
-  // the database, as we only do a single db request
-  client.end()
   return result.rows[0]
 }
 

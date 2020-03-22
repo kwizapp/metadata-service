@@ -4,7 +4,7 @@ const { validateId } = require('@kwizapp/kwiz-utils')
 
 const dbService = require('./dbService')
 
-module.exports = async req => {
+module.exports = async (req, res) => {
   let imdbId
 
   try {
