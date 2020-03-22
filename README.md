@@ -2,13 +2,6 @@
 
 This service is responsible for returning metadata for specific movies. It uses a `Heroku-Postgres` database that stores all data related to the movies. If an `IMDb Id` is passed as an explicit parameter, the given movie is fetched; alternatively, the service fetches a random movie from the database.
 
-## Database
-
-**Postgres:** We use the free postgres database addon offered by Heroku
-
-- https://devcenter.heroku.com/articles/heroku-postgresql#connecting-in-node-js
-- https://devcenter.heroku.com/articles/connecting-to-heroku-postgres-databases-from-outside-of-heroku#credentials
-
 ## Development
 
 ### Login to NPM registry
@@ -76,3 +69,16 @@ This will the micro HTTP service on PORT 3000.
 ```bash
 npm run test
 ```
+
+## Database Management
+
+**Postgres:** We use the free postgres database addon offered by Heroku
+
+- https://devcenter.heroku.com/articles/heroku-postgresql#connecting-in-node-js
+- https://devcenter.heroku.com/articles/connecting-to-heroku-postgres-databases-from-outside-of-heroku#credentials
+
+Follow these steps to run the database hydration notebook (`Preprocessing.ipynb`):
+
+1. Extract `the-movies-dataset.zip` into `datasets/the-movies-dataset/` in this repo
+2. Install required Python dependencies (pandas, sqlalchemy, psycopg2, python-dotenv (pip!))
+3. Ensure that `DATABASE_URL` in `.env` is set to a valid and complete URL
