@@ -1,6 +1,6 @@
 # metadata-service
 
-This service is responsible for returning metadata for specific movies. It uses a `Heroku-Postgres` database that stores all data related to the movies. If an `IMDb Id` is passed as an explicit parameter, the given movie is fetched; alternatively, the service fetches a random movie from the database.
+This service is responsible for returning metadata for specific movies. It uses a `Heroku-Postgres` database that stores all data related to the movies. If an `ImdbID` is passed as an explicit parameter, the given movie is fetched; alternatively, the service fetches random movies from the database. Filters and the number of random movies can be specified with additional parameters.
 
 ## Development
 
@@ -61,9 +61,11 @@ This will the micro HTTP service on PORT 3000.
 
 `/?id=<id>`
 
-| Parameter | Type     | Description                                                                                                          |
-| :-------- | :------- | :------------------------------------------------------------------------------------------------------------------- |
-| `id`      | `string` | Optional. IMDb ID, uniquely identifies a movie. The service will return a random movie if the parameter is not given |
+| Parameter       | Type      |  Default  | Description                                                                                                               |
+|:----------------|:----------|:---------:|:--------------------------------------------------------------------------------------------------------------------------|
+| `imdbId`        | `ImdbID`  | undefined | Optional. IMDb ID, uniquely identifies a movie. The service will return random movie(s) if the parameter is not given.    |
+| `numMovies`     | `Integer` |     1     | Optional. Defines how many results should be fetched when fetching random movies. A fixed `imdbId` will take precedence.  |
+| `differentFrom` | `ImdbID`  | undefined | Optional. Defines a base `ImdbID` that will not be included in any random results. A fixed `imdbId` will take precedence. |
 
 **Example:**
 
@@ -72,26 +74,28 @@ This will the micro HTTP service on PORT 3000.
 **Returns:**
 
 ```json
-{
-  "imdb_id": "tt3450958",
-  "budget": "152000000",
-  "homepage": "http://www.foxmovies.com/movies/war-for-the-planet-of-the-apes",
-  "original_language": "en",
-  "original_title": "War for the Planet of the Apes",
-  "overview": "Caesar and his apes are forced into a deadly conflict with an army of humans led by a ruthless Colonel. After the apes suffer unimaginable losses, Caesar wrestles with his darker instincts and begins his own mythic quest to avenge his kind. As the journey finally brings them face to face, Caesar and the Colonel are pitted against each other in an epic battle that will determine the fate of both their species and the future of the planet.",
-  "popularity": 146.161786,
-  "poster_path": "/3vYhLLxrTtZLysXtIWktmd57Snv.jpg",
-  "release_date": "2017-07-11",
-  "revenue": 369907963,
-  "runtime": 140,
-  "status": "Released",
-  "tagline": "For freedom. For family. For the planet.",
-  "title": "War for the Planet of the Apes",
-  "video": false,
-  "vote_average": 6.7,
-  "vote_count": 1675,
-  "date_segment": "2"
-}
+[
+  {
+    "imdb_id": "tt3450958",
+    "budget": "152000000",
+    "homepage": "http://www.foxmovies.com/movies/war-for-the-planet-of-the-apes",
+    "original_language": "en",
+    "original_title": "War for the Planet of the Apes",
+    "overview": "Caesar and his apes are forced into a deadly conflict with an army of humans led by a ruthless Colonel. After the apes suffer unimaginable losses, Caesar wrestles with his darker instincts and begins his own mythic quest to avenge his kind. As the journey finally brings them face to face, Caesar and the Colonel are pitted against each other in an epic battle that will determine the fate of both their species and the future of the planet.",
+    "popularity": 146.161786,
+    "poster_path": "/3vYhLLxrTtZLysXtIWktmd57Snv.jpg",
+    "release_date": "2017-07-11",
+    "revenue": 369907963,
+    "runtime": 140,
+    "status": "Released",
+    "tagline": "For freedom. For family. For the planet.",
+    "title": "War for the Planet of the Apes",
+    "video": false,
+    "vote_average": 6.7,
+    "vote_count": 1675,
+    "date_segment": "2"
+  }
+]
 ```
 
 ## Test
