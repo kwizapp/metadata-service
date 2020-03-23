@@ -59,17 +59,25 @@ This will the micro HTTP service on PORT 3000.
 
 ## API
 
-`/?id=<id>`
+The `metadata-service` API provides two main modes of operation:
 
-| Parameter       | Type      |  Default  | Description                                                                                                               |
-|:----------------|:----------|:---------:|:--------------------------------------------------------------------------------------------------------------------------|
-| `imdbId`        | `ImdbID`  | undefined | Optional. IMDb ID, uniquely identifies a movie. The service will return random movie(s) if the parameter is not given.    |
-| `numMovies`     | `Integer` |     1     | Optional. Defines how many results should be fetched when fetching random movies. A fixed `imdbId` will take precedence.  |
-| `differentFrom` | `ImdbID`  | undefined | Optional. Defines a base `ImdbID` that will not be included in any random results. A fixed `imdbId` will take precedence. |
+1. Fetching a single, specific movie given its `ImdbID`
+2. Fetching a list of random movies (1-n items) with optional filtering applied
+
+### Fetching a specific movie
+
+`/?imdbId=<id>`
+
+| Parameter       | Type      |  Default  | Description                                                                                                                   |
+|:----------------|:----------|:---------:|:------------------------------------------------------------------------------------------------------------------------------|
+| `imdbId`        | `ImdbID`  | undefined | Optional. IMDb ID, uniquely identifies a movie. The service will return random movie(s) if the parameter is not given.        |
+| `numMovies`     | `Integer` |     1     | Optional. Defines how many results should be fetched when fetching random movies. A fixed `imdbId` will take precedence.      |
+| `differentFrom` | `ImdbID`  | undefined | Optional. Defines a base `ImdbID` that will not be included in any random results. A fixed `imdbId` will take precedence.     |
+| `notReleasedIn` | `Integer` | undefined | Optional. Defines a release year that movies in the random results should not be from. A fixed `imdbId` will take precedence. |
 
 **Example:**
 
-`http://localhost:3000/` or `http://localhost:3000/?id=tt3450958`
+`http://localhost:3000/?id=tt3450958`
 
 **Returns:**
 
@@ -97,6 +105,16 @@ This will the micro HTTP service on PORT 3000.
   }
 ]
 ```
+
+### Fetching a list of random movies
+
+`/?numMovies=<MovieCount>&differentFrom=<OtherImdbID>&notReleasedIn=<ReleaseYear>`
+
+| Parameter       | Type      |  Default  | Description                                                                            |
+|:----------------|:----------|:---------:|:---------------------------------------------------------------------------------------|--|
+| `numMovies`     | `Integer` |     1     | Optional. Defines how many results should be fetched when fetching random movies.      |
+| `differentFrom` | `ImdbID`  | undefined | Optional. Defines a base `ImdbID` that will not be included in any random results.     |
+| `notReleasedIn` | `Integer` | undefined | Optional. Defines a release year that movies in the random results should not be from. |
 
 ## Test
 
