@@ -98,6 +98,7 @@ The `metadata-service` API provides two main modes of operation:
     "video": false,
     "vote_average": 6.7,
     "vote_count": 1675,
+    "release_year": 2017
     "date_segment": "2"
   }
 ]
