@@ -29,6 +29,14 @@ async function fetchRandomMovieIds(client, numIds, filters) {
       movieIdQuery += ` WHERE imdb_id != $1`
       queryValues = append(filters.differentFrom, queryValues)
     }
+    if (filters.notReleasedIn) {
+      if (filters.differentFrom) {
+        movieIdQuery += ' AND release_year != $2'
+      } else {
+        movieIdQuery += ' WHERE release_year != $1'
+      }
+      queryValues = append(filters.notReleasedIn, queryValues)
+    }
   }
   console.log(`> Prepared query: ${movieIdQuery}`)
 

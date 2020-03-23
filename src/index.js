@@ -13,6 +13,7 @@ const queryValidator = yup.object().shape({
   differentFrom: yup
     .string()
     .test('isValidImdbId', '${path} is an invalid Imdb ID', isImdbIdValid),
+  notReleasedIn: yup.number(),
 })
 
 module.exports = async (req, res) => {
@@ -41,8 +42,10 @@ module.exports = async (req, res) => {
   }
 
   // if no id has been passed, fetch a random movie
+  // TODO: improve filtering structure to make it more extendable (e.g., as an array with generic props?)
   const filters = {
     differentFrom: query.differentFrom,
+    notReleasedIn: query.notReleasedIn,
   }
   try {
     return dbService.fetchRandomMovies(
