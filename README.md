@@ -29,9 +29,10 @@ This service is responsible for returning metadata for specific movies. It uses 
    ```
 
 2. Ensure that `DATABASE_URL` in `.env` is set to a valid and complete URL
-3. _Optional: if  `Preprocessing.ipynb`_ changed 
+3. _Optional: if  `Preprocessing.ipynb` changed_:
    - Create python file from notebook `jupyter nbconvert --to python Preprocessing.ipynb`
 4. Run the database hydration notebook `Preprocessing.py`
+
    ```python
    python Preprocessing.py
    ```
@@ -40,7 +41,7 @@ This service is responsible for returning metadata for specific movies. It uses 
 
 We use a library provided by our organization, namely `kwiz-utils`. For npm to find the package, do the following:
 
-- Login to Github Package Registry using npm login --registry=https://npm.pkg.github.com and your credentials.
+- Login to Github Package Registry using `npm login --registry=https://npm.pkg.github.com` and your credentials.
   - Any provided access token will need at least the repo and read:packages scope.
 
 After that, `npm install` should run without any problems.
