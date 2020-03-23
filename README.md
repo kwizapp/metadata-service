@@ -15,7 +15,7 @@ This service is responsible for returning metadata for specific movies. It uses 
 
 **Dataset**
 
-1. Download the required (dataset)[https://www.kaggle.com/rounakbanik/the-movies-dataset]
+1. Download the required [dataset](https://www.kaggle.com/rounakbanik/the-movies-dataset)
 2. Create a folder `datasets/` in the root folder
 3. Extract the `the-movies-dataset.zip` into `datasets/the-movies-dataset/`
 
@@ -29,7 +29,7 @@ This service is responsible for returning metadata for specific movies. It uses 
    ```
 
 2. Ensure that `DATABASE_URL` in `.env` is set to a valid and complete URL
-3. _Optional: if  `Preprocessing.ipynb` changed_:
+3. _Optional: if `Preprocessing.ipynb` changed_:
    - Create python file from notebook `jupyter nbconvert --to python Preprocessing.ipynb`
 4. Run the database hydration notebook `Preprocessing.py`
 
