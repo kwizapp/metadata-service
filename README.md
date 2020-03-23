@@ -22,10 +22,11 @@ This service is responsible for returning metadata for specific movies. It uses 
 **Python**
 
 1. Install required Python dependencies (jupyter, requests, pandas, sqlalchemy, psycopg2, python-dotenv (pip!))
-   You can run the following to create a conda environment directly with all the required dependencies specified
+   You can run the following to create and activate a conda environment directly with all the required dependencies specified
 
    ```python
    conda env create -f environment.yml
+   conda activate metadata-service
    ```
 
 2. Ensure that `DATABASE_URL` in `.env` is set to a valid and complete URL
