@@ -83,7 +83,6 @@ top50_until_1990 = movies_until_1990.iloc[0:50]
 top50_until_2005 = movies_until_2005.iloc[0:50]
 top50_until_2020 = movies_until_2020.iloc[0:50]
 top50_all = pd.concat([top50_until_1990, top50_until_2005, top50_until_2020])
-print(top50_all.head())
 
 
 # check all movies in the top50 for consistency with omdb
@@ -107,9 +106,9 @@ try:
 
     # write the results to the database
     top50_all = top50_all.set_index("imdb_id")
-    # top50_all[top50_all["omdb_consistent"]].to_sql(
-    #     "movies", con=engine, if_exists="replace"
-    # )
+    top50_all[top50_all["omdb_consistent"]].to_sql(
+        "movies", con=engine, if_exists="replace"
+    )
 
 finally:
     # get rid of the connection pool
