@@ -30,6 +30,9 @@ movies_meta = movies_meta[movies_meta.original_language.isin(["en", "de"])]
 for column in ["imdb_id", "title", "release_date", "popularity"]:
     movies_meta = movies_meta[movies_meta[column].isna() == False]
 
+# extract the release year from the release date
+movies_meta["release_year"] = pd.to_datetime(movies_meta["release_date"]).apply(lambda date: date.year)
+
 # filter adult movies
 movies_meta = movies_meta[movies_meta.adult == "False"]
 
