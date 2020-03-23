@@ -71,9 +71,6 @@ The `metadata-service` API provides two main modes of operation:
 | Parameter       | Type      |  Default  | Description                                                                                                                   |
 |:----------------|:----------|:---------:|:------------------------------------------------------------------------------------------------------------------------------|
 | `imdbId`        | `ImdbID`  | undefined | Optional. IMDb ID, uniquely identifies a movie. The service will return random movie(s) if the parameter is not given.        |
-| `numMovies`     | `Integer` |     1     | Optional. Defines how many results should be fetched when fetching random movies. A fixed `imdbId` will take precedence.      |
-| `differentFrom` | `ImdbID`  | undefined | Optional. Defines a base `ImdbID` that will not be included in any random results. A fixed `imdbId` will take precedence.     |
-| `notReleasedIn` | `Integer` | undefined | Optional. Defines a release year that movies in the random results should not be from. A fixed `imdbId` will take precedence. |
 
 **Example:**
 
