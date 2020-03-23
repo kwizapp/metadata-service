@@ -4,6 +4,38 @@ This service is responsible for returning metadata for specific movies. It uses 
 
 ## Development
 
+### Database Management
+
+**Postgres:** We use the free postgres database addon offered by Heroku
+
+- https://devcenter.heroku.com/articles/heroku-postgresql#connecting-in-node-js
+- https://devcenter.heroku.com/articles/connecting-to-heroku-postgres-databases-from-outside-of-heroku#credentials
+
+#### How to hydrate the database
+
+**Dataset**
+
+1. Download the required (dataset)[https://www.kaggle.com/rounakbanik/the-movies-dataset]
+2. Create a folder `datasets/` in the root folder
+3. Extract the `the-movies-dataset.zip` into `datasets/the-movies-dataset/`
+
+**Python**
+
+1. Install required Python dependencies (jupyter, requests, pandas, sqlalchemy, psycopg2, python-dotenv (pip!))
+   You can run the following to create a conda environment directly with all the required dependencies specified
+
+   ```python
+   conda env create -f environment.yml
+   ```
+
+2. Ensure that `DATABASE_URL` in `.env` is set to a valid and complete URL
+3. _Optional: if  `Preprocessing.ipynb`_ changed 
+   - Create python file from notebook `jupyter nbconvert --to python Preprocessing.ipynb`
+4. Run the database hydration notebook `Preprocessing.py`
+   ```python
+   python Preprocessing.py
+   ```
+
 ### Login to NPM registry
 
 We use a library provided by our organization, namely `kwiz-utils`. For npm to find the package, do the following:
@@ -69,16 +101,3 @@ This will the micro HTTP service on PORT 3000.
 ```bash
 npm run test
 ```
-
-## Database Management
-
-**Postgres:** We use the free postgres database addon offered by Heroku
-
-- https://devcenter.heroku.com/articles/heroku-postgresql#connecting-in-node-js
-- https://devcenter.heroku.com/articles/connecting-to-heroku-postgres-databases-from-outside-of-heroku#credentials
-
-Follow these steps to run the database hydration notebook (`Preprocessing.ipynb`):
-
-1. Extract `the-movies-dataset.zip` into `datasets/the-movies-dataset/` in this repo
-2. Install required Python dependencies (pandas, sqlalchemy, psycopg2, python-dotenv (pip!))
-3. Ensure that `DATABASE_URL` in `.env` is set to a valid and complete URL
