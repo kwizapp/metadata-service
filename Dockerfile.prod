@@ -5,10 +5,13 @@ ARG NODE_AUTH_TOKEN
 # inject and install dependencies
 COPY --chown=1000:0 package.json package-lock.json .npmrc /app/
 WORKDIR /app
-RUN set -x && npm ci
+RUN set -x && npm ci --only=production
 
 # extend basic alpine image
 FROM node:12-alpine
+
+# set node to a production environment
+ENV NODE_ENV "prod"
 
 # switch to a non-root user
 USER 1000
