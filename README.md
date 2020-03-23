@@ -30,13 +30,7 @@ This service is responsible for returning metadata for specific movies. It uses 
    ```
 
 2. Ensure that `DATABASE_URL` in `.env` is set to a valid and complete URL
-3. _Optional: if `Preprocessing.ipynb` changed_:
-   - Create python file from notebook `jupyter nbconvert --to python Preprocessing.ipynb`
-4. Run the database hydration notebook `Preprocessing.py`
-
-   ```python
-   python Preprocessing.py
-   ```
+3. Run the database hydration script with `python Preprocessing.py`
 
 ### Login to NPM registry
 
@@ -52,6 +46,8 @@ After that, `npm install` should run without any problems.
 - Create a `.env` file based on `.env.template`
 - Add the `DATABASE_URL` to `.env`
   - You can get the url from heroku inside the `metadata-service` app addons
+- Set the `POSTER_SERVICE_URL` to link to a running instance of the `poster-service`
+  - E.g., `http://localhost:3000`
 
 ### Local dev with `micro-dev`
 
@@ -65,13 +61,13 @@ This will the micro HTTP service on PORT 3000.
 
 `/?id=<id>`
 
-| Parameter | Type     | Description                                                                                     |
-| :-------- | :------- | :---------------------------------------------------------------------------------------------- |
-| `id`      | `string` | IMDb ID, unique to a film. The service will return a random movie if the parameter is not given |
+| Parameter | Type     | Description                                                                                                          |
+| :-------- | :------- | :------------------------------------------------------------------------------------------------------------------- |
+| `id`      | `string` | Optional. IMDb ID, uniquely identifies a movie. The service will return a random movie if the parameter is not given |
 
 **Example:**
 
-`http://localhost:3000/?id=tt3450958`
+`http://localhost:3000/` or `http://localhost:3000/?id=tt3450958`
 
 **Returns:**
 
