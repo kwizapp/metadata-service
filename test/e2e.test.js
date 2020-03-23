@@ -1,22 +1,22 @@
-const micro = require('micro')
-const request = require('supertest')
+const micro = require("micro");
+const request = require("supertest");
 
-const server = require('../src/index')
+const server = require("../src/index");
 
-describe('metadata-service', () => {
-  it('fails if an invalid ImdbID is specified', async () => {
-    const response = await request(micro(server)).get('/?imdbId=123')
-    expect(response.statusCode).toEqual(400)
-  })
+describe("metadata-service", () => {
+  it("fails if an invalid ImdbID is specified", async () => {
+    const response = await request(micro(server)).get("/?imdbId=123");
+    expect(response.statusCode).toEqual(400);
+  });
 
-  it('fails if a non-existent ImdbID is specified', async () => {
-    const response = await request(micro(server)).get('/?imdbId=tt1234567')
-    expect(response.statusCode).toEqual(404)
-  })
+  it("fails if a non-existent ImdbID is specified", async () => {
+    const response = await request(micro(server)).get("/?imdbId=tt1234567");
+    expect(response.statusCode).toEqual(404);
+  });
 
-  it('fetches a specific movie given an ImdbID', async () => {
-    const response = await request(micro(server)).get('/?imdbId=tt0076759')
-    expect(response.statusCode).toEqual(200)
+  it("fetches a specific movie given an ImdbID", async () => {
+    const response = await request(micro(server)).get("/?imdbId=tt0076759");
+    expect(response.statusCode).toEqual(200);
     expect(response.body).toMatchInlineSnapshot(`
       Array [
         Object {
@@ -31,6 +31,7 @@ describe('metadata-service', () => {
           "popularity": 42.149696999999996,
           "poster_path": "/btTdmkgIvOi0FFip1sPuZI2oQG6.jpg",
           "release_date": "1977-05-25",
+          "release_year": "1977",
           "revenue": 775398007,
           "runtime": 121,
           "status": "Released",
@@ -41,48 +42,91 @@ describe('metadata-service', () => {
           "vote_count": 6778,
         },
       ]
-    `)
-  })
+    `);
+  });
 
-  it('fetches a random movie if no ImdbID is given', async () => {
-    const response = await request(micro(server)).get('/')
-    expect(response.statusCode).toEqual(200)
-    response.body.forEach(movie =>
+  it("fetches a random movie if no ImdbID is given", async () => {
+    const response = await request(micro(server)).get("/");
+    expect(response.statusCode).toEqual(200);
+    response.body.forEach((movie) =>
       expect(movie).toMatchObject({
         date_segment: expect.any(String),
         imdb_id: expect.any(String),
         title: expect.any(String),
       })
-    )
-  })
+    );
+  });
 
-  it('fetches a list of random movies', async () => {
-    const response = await request(micro(server)).get('/?numMovies=3')
-    expect(response.statusCode).toEqual(200)
-    expect(response.body.length).toEqual(3)
-    response.body.forEach(movie =>
+  it("fetches a list of random movies", async () => {
+    const response = await request(micro(server)).get("/?numMovies=3");
+    expect(response.statusCode).toEqual(200);
+    expect(response.body.length).toEqual(3);
+    response.body.forEach((movie) =>
       expect(movie).toMatchObject({
         date_segment: expect.any(String),
         imdb_id: expect.any(String),
         title: expect.any(String),
       })
-    )
-  })
+    );
+  });
 
-  it('fetches a list of random movies filtered to be different from a given movie', async () => {
+  it("fetches a list of random movies filtered to be different from a given movie", async () => {
     const response = await request(micro(server)).get(
-      '/?numMovies=3&differentFrom=tt0076759'
-    )
-    expect(response.statusCode).toEqual(200)
-    expect(response.body.length).toEqual(3)
-    response.body.forEach(movie =>
+      "/?numMovies=3&differentFrom=tt0076759"
+    );
+    expect(response.statusCode).toEqual(200);
+    expect(response.body.length).toEqual(3);
+    response.body.forEach((movie) =>
       expect(movie).toMatchObject({
         date_segment: expect.any(String),
         imdb_id: expect.any(String),
         title: expect.any(String),
       })
-    )
+    );
 
-    expect(response.body.map(movie => movie.imdb_id)).not.toContain('tt0076759')
-  })
-})
+    expect(response.body.map((movie) => movie.imdb_id)).not.toContain(
+      "tt0076759"
+    );
+  });
+
+  it("fetches a list of random movies filtered to not be from a specific year", async () => {
+    const response = await request(micro(server)).get(
+      "/?numMovies=3&notReleasedIn=2010"
+    );
+    expect(response.statusCode).toEqual(200);
+    expect(response.body.length).toEqual(3);
+    response.body.forEach((movie) =>
+      expect(movie).toMatchObject({
+        date_segment: expect.any(String),
+        imdb_id: expect.any(String),
+        title: expect.any(String),
+      })
+    );
+
+    expect(response.body.map((movie) => movie.release_year)).not.toContain(
+      2010
+    );
+  });
+
+  it("fetches a list of random movies filtered to be different from a given movie and not from a specific year", async () => {
+    const response = await request(micro(server)).get(
+      "/?numMovies=3&differentFrom=tt0076759&notReleasedIn=2010"
+    );
+    expect(response.statusCode).toEqual(200);
+    expect(response.body.length).toEqual(3);
+    response.body.forEach((movie) =>
+      expect(movie).toMatchObject({
+        date_segment: expect.any(String),
+        imdb_id: expect.any(String),
+        title: expect.any(String),
+      })
+    );
+
+    expect(response.body.map((movie) => movie.imdb_id)).not.toContain(
+      "tt0076759"
+    );
+    expect(response.body.map((movie) => movie.release_year)).not.toContain(
+      2010
+    );
+  });
+});
