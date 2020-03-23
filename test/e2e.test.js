@@ -23,6 +23,7 @@ describe('metadata-service', () => {
         "date_segment": "0",
         "homepage": "http://www.starwars.com/films/star-wars-episode-iv-a-new-hope",
         "imdb_id": "tt0076759",
+        "omdb_consistent": false,
         "original_language": "en",
         "original_title": "Star Wars",
         "overview": "Princess Leia is captured and held hostage by the evil Imperial forces in their effort to take over the galactic Empire. Venturesome Luke Skywalker and dashing captain Han Solo team together with the loveable robot duo R2-D2 and C-3PO to rescue the beautiful princess and restore peace and justice in the Empire.",
