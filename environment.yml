@@ -114,6 +114,4 @@ dependencies:
   - zipp=2.2.0=py_0
   - zlib=1.2.11=h7b6447c_3
   - pip:
-    - python-dotenv==0.12.0
-prefix: /home/nik/miniconda3/envs/metadata-service
-
+      - python-dotenv==0.12.0
