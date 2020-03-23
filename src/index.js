@@ -18,12 +18,12 @@ const queryValidator = yup.object().shape({
 module.exports = async (req, res) => {
   // try to extract query params from the request URL
   const { query } = parse(req.url, true)
+  const transformedQuery = queryValidator.cast(query)
 
   try {
     // validate query params
-    queryValidator.validateSync(query)
+    queryValidator.validateSync(transformedQuery)
   } catch (e) {
-    console.error(e)
     throw createError(400, 'VALIDATION_ERROR', e)
   }
 
@@ -31,9 +31,9 @@ module.exports = async (req, res) => {
   const client = dbService.connectDb()
 
   // if an imdb id has been passed, fetch the requested movie metadata
-  if (typeof query.imdbId !== 'undefined') {
+  if (typeof transformedQuery.imdbId !== 'undefined') {
     try {
-      return dbService.fetchMoviesById(client, [query.imdbId])
+      return dbService.fetchMoviesById(client, [transformedQuery.imdbId])
     } catch (e) {
       console.error(e)
       throw createError(404, 'MOVIE_NOT_FOUND', e)
@@ -41,8 +41,15 @@ module.exports = async (req, res) => {
   }
 
   // if no id has been passed, fetch a random movie
+  const filters = {
+    differentFrom: query.differentFrom,
+  }
   try {
-    return dbService.fetchRandomMovies(client, 1)
+    return dbService.fetchRandomMovies(
+      client,
+      transformedQuery.numMovies,
+      filters
+    )
   } catch (e) {
     console.error(e)
     throw createError(500, 'COULD_NOT_FETCH_MOVIE', e)

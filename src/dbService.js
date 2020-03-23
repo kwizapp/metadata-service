@@ -30,9 +30,10 @@ async function fetchRandomMovieIds(client, numIds, filters) {
       queryValues = append(filters.differentFrom, queryValues)
     }
   }
+  console.log(`> Prepared query: ${movieIdQuery}`)
 
   // get all movie ids that match the above filter
-  const queryResult = await client.query(movieIdQuery)
+  const queryResult = await client.query(movieIdQuery, queryValues)
 
   // select numIds random ids from the list of ids
   let randomIds = []
@@ -52,10 +53,11 @@ async function fetchRandomMovieIds(client, numIds, filters) {
 
 async function fetchMoviesById(client, imdbIds) {
   // fetch the movie with the given imdb_id
-  const MOVIE_QUERY = `SELECT * FROM movies WHERE imdb_id IN (${imdbIds.map(
-    (_, ix) => '$' + ix + 1
+  const moviesQuery = `SELECT * FROM movies WHERE imdb_id IN (${imdbIds.map(
+    (_, ix) => '$' + (ix + 1)
   )})`
-  const result = await client.query(MOVIE_QUERY, imdbIds)
+  console.log(`> Prepared query: ${moviesQuery}`)
+  const result = await client.query(moviesQuery, imdbIds)
 
   // if we have data, return the result and disconnect from
   // the database, as we only do a single db request

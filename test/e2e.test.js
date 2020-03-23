@@ -47,20 +47,42 @@ describe('metadata-service', () => {
   it('fetches a random movie if no ImdbID is given', async () => {
     const response = await request(micro(server)).get('/')
     expect(response.statusCode).toEqual(200)
-    expect(response.body).toMatchObject([
-      {
+    response.body.forEach(movie =>
+      expect(movie).toMatchObject({
         date_segment: expect.any(String),
         imdb_id: expect.any(String),
         title: expect.any(String),
-      },
-    ])
-  })
-
-  it('fetches a list of random movies', async () => {
-    const response = await request(micro(server)).get(
-      '/?differentFrom=tt0076759'
+      })
     )
   })
 
-  it('fetches a list of random movies filtered to be different from a given movie', () => {})
+  it('fetches a list of random movies', async () => {
+    const response = await request(micro(server)).get('/?numMovies=3')
+    expect(response.statusCode).toEqual(200)
+    expect(response.body.length).toEqual(3)
+    response.body.forEach(movie =>
+      expect(movie).toMatchObject({
+        date_segment: expect.any(String),
+        imdb_id: expect.any(String),
+        title: expect.any(String),
+      })
+    )
+  })
+
+  it('fetches a list of random movies filtered to be different from a given movie', async () => {
+    const response = await request(micro(server)).get(
+      '/?numMovies=3&differentFrom=tt0076759'
+    )
+    expect(response.statusCode).toEqual(200)
+    expect(response.body.length).toEqual(3)
+    response.body.forEach(movie =>
+      expect(movie).toMatchObject({
+        date_segment: expect.any(String),
+        imdb_id: expect.any(String),
+        title: expect.any(String),
+      })
+    )
+
+    expect(response.body.map(movie => movie.imdb_id)).not.toContain('tt0076759')
+  })
 })
