@@ -15,8 +15,8 @@ assert POSTER_SERVICE_URL is not None
 
 # try to fetch a random movie to ensure the poster service is working
 try:
-    random_movie = requests.get(f"{POSTER_SERVICE_URL}/")
-    assert random_movie.status_code == 200
+    some_movie = requests.get(f"{POSTER_SERVICE_URL}/?id=tt3450958")
+    assert some_movie.status_code == 200
 except:
     raise ConnectionError()
 
