@@ -16,7 +16,7 @@ const queryValidator = yup.object().shape({
   notReleasedIn: yup.number(),
 })
 
-module.exports = async (req, res) => {
+module.exports = async (req) => {
   // try to extract query params from the request URL
   const { query } = parse(req.url, true)
   const transformedQuery = queryValidator.cast(query)
@@ -51,7 +51,7 @@ module.exports = async (req, res) => {
     return dbService.fetchRandomMovies(
       client,
       transformedQuery.numMovies,
-      filters
+      filters,
     )
   } catch (e) {
     console.error(e)

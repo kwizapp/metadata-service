@@ -18,7 +18,11 @@
     "start": "micro src/index.js",
     "test": "jest",
     "test:handles": "jest --detectOpenHandles",
-    "test:watch": "jest --watch"
+    "test:watch": "jest --watch",
+    "lint:ci": "eslint \"{src,test}/**/*.{js,ts,tsx}\"",
+    "lint": "eslint \"{src,test}/**/*.{js,ts,tsx}\" --fix",
+    "format": "prettier --write \"{src,test}/**/*.{js,ts,tsx}\"",
+    "format:ci": "prettier --list-different \"{src,test}/**/*.{js,ts,tsx}\""
   },
   "dependencies": {
     "@kwizapp/kwiz-utils": "0.0.2",
@@ -29,6 +33,11 @@
     "yup": "0.28.3"
   },
   "devDependencies": {
+    "@kwizapp/eslint-config-js": "0.0.8",
+    "@kwizapp/prettier-config": "0.0.8",
+    "eslint": "6.8.0",
+    "eslint-config-prettier": "6.10.1",
+    "eslint-plugin-prettier": "3.1.2",
     "jest": "25.1.0",
     "micro-dev": "3.0.0",
     "prettier": "2.0.1",
