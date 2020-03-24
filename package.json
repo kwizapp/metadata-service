@@ -18,7 +18,9 @@
     "start": "micro src/index.js",
     "test": "jest",
     "test:handles": "jest --detectOpenHandles",
-    "test:watch": "jest --watch"
+    "test:watch": "jest --watch",
+    "format": "prettier --write \"src/**/*.{js,ts,tsx}\"",
+    "format:ci": "prettier --list-different \"src/**/*.{js,ts,tsx}\""
   },
   "dependencies": {
     "@kwizapp/kwiz-utils": "0.0.2",

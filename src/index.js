@@ -51,7 +51,7 @@ module.exports = async (req, res) => {
     return dbService.fetchRandomMovies(
       client,
       transformedQuery.numMovies,
-      filters
+      filters,
     )
   } catch (e) {
     console.error(e)

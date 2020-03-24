@@ -62,7 +62,7 @@ async function fetchRandomMovieIds(client, numIds, filters) {
 async function fetchMoviesById(client, imdbIds) {
   // fetch the movie with the given imdb_id
   const moviesQuery = `SELECT * FROM movies WHERE imdb_id IN (${imdbIds.map(
-    (_, ix) => '$' + (ix + 1)
+    (_, ix) => '$' + (ix + 1),
   )})`
   console.log(`> Prepared query: ${moviesQuery}`)
   const result = await client.query(moviesQuery, imdbIds)
