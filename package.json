@@ -19,8 +19,10 @@
     "test": "jest",
     "test:handles": "jest --detectOpenHandles",
     "test:watch": "jest --watch",
-    "format": "prettier --write \"src/**/*.{js,ts,tsx}\"",
-    "format:ci": "prettier --list-different \"src/**/*.{js,ts,tsx}\""
+    "lint:ci": "eslint \"{src,test}/**/*.{js,ts,tsx}\"",
+    "lint": "eslint \"{src,test}/**/*.{js,ts,tsx}\" --fix",
+    "format": "prettier --write \"{src,test}/**/*.{js,ts,tsx}\"",
+    "format:ci": "prettier --list-different \"{src,test}/**/*.{js,ts,tsx}\""
   },
   "dependencies": {
     "@kwizapp/kwiz-utils": "0.0.2",
