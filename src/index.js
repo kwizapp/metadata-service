@@ -16,7 +16,7 @@ const queryValidator = yup.object().shape({
   notReleasedIn: yup.number(),
 })
 
-module.exports = async (req, res) => {
+module.exports = async (req) => {
   // try to extract query params from the request URL
   const { query } = parse(req.url, true)
   const transformedQuery = queryValidator.cast(query)
