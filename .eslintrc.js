@@ -2,7 +2,7 @@ module.exports = {
   extends: ['@kwizapp/eslint-config-js'],
   // define parser options to make features such as async/wait work
   parserOptions: {
-    ecmaVersion: 2017,
+    ecmaVersion: 2020, // same as ECMAScript 10
   },
   // define the environment
   env: {
