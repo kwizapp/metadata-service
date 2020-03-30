@@ -98,7 +98,7 @@ The `metadata-service` API provides two main modes of operation:
     "video": false,
     "vote_average": 6.7,
     "vote_count": 1675,
-    "release_year": 2017
+    "release_year": 2017,
     "date_segment": "2"
   }
 ]
@@ -109,8 +109,8 @@ The `metadata-service` API provides two main modes of operation:
 `/?numMovies=<MovieCount>&differentFrom=<OtherImdbID>&notReleasedIn=<ReleaseYear>`
 
 | Parameter       | Type      |  Default  | Description                                                                            |
-|:----------------|:----------|:---------:|:---------------------------------------------------------------------------------------|--|
-| `numMovies`     | `Integer` |     1     | Optional. Defines how many results should be fetched when fetching random movies.      |
+|:----------------|:----------|:---------:|:---------------------------------------------------------------------------------------|
+| `numMovies`     | `Integer` |     1     | Optional. Defines how many results should be fetched when fetching random movies.                             |
 | `differentFrom` | `ImdbID`  | undefined | Optional. Defines a base `ImdbID` that will not be included in any random results.     |
 | `notReleasedIn` | `Integer` | undefined | Optional. Defines a release year that movies in the random results should not be from. |
 
