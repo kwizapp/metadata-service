@@ -14,7 +14,7 @@
   "license": "MIT",
   "main": "src/index.js",
   "scripts": {
-    "dev": "micro-dev src/index.js",
+    "dev": "micro-dev -p 3003 src/index.js",
     "start": "micro src/index.js",
     "test": "jest",
     "test:handles": "jest --detectOpenHandles",
