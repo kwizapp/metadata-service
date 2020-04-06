@@ -3,6 +3,8 @@ const request = require('supertest')
 
 const server = require('../src/index')
 
+const Set = require('core-js/features/set')
+
 // based on: https://stackoverflow.com/questions/57001262/jest-expect-only-unique-elements-in-an-array
 expect.extend({
   toBeDistinct(received) {
