@@ -3,6 +3,21 @@ const request = require('supertest')
 
 const server = require('../src/index')
 
+// based on: https://stackoverflow.com/questions/57001262/jest-expect-only-unique-elements-in-an-array
+expect.extend({
+  toBeDistinct(received) {
+    return Array.isArray(received) && new Set(received).size === received.length
+      ? {
+          message: () => `expected [${received}] array is unique`,
+          pass: true,
+        }
+      : {
+          message: () => `expected [${received}] array is not to unique`,
+          pass: false,
+        }
+  },
+})
+
 describe('metadata-service', () => {
   it('fails if an invalid ImdbID is specified', async () => {
     const response = await request(micro(server)).get('/?imdbId=123')
@@ -89,7 +104,7 @@ describe('metadata-service', () => {
     )
   })
 
-  it('fetches a list of random movies filtered to not be from a specific year', async () => {
+  it('fetches a list of random movies filtered to not be from a specific year and having distinct release years', async () => {
     const response = await request(micro(server)).get(
       '/?numMovies=3&notReleasedIn=2010',
     )
@@ -104,14 +119,15 @@ describe('metadata-service', () => {
     )
 
     expect(response.body.map((movie) => movie.release_year)).not.toContain(2010)
+    expect(response.body.map((movie) => movie.release_year)).toBeDistinct()
   })
 
-  it('fetches a list of random movies filtered to be different from a given movie and not from a specific year', async () => {
+  it('fetches a list of random movies filtered to be different from a given movie and not from a specific year and having distinct release years', async () => {
     const response = await request(micro(server)).get(
-      '/?numMovies=3&differentFrom=tt0076759&notReleasedIn=2010',
+      '/?numMovies=10&differentFrom=tt0076759&notReleasedIn=2010',
     )
     expect(response.statusCode).toEqual(200)
-    expect(response.body.length).toEqual(3)
+    expect(response.body.length).toEqual(10)
     response.body.forEach((movie) =>
       expect(movie).toMatchObject({
         date_segment: expect.any(String),
@@ -124,5 +140,6 @@ describe('metadata-service', () => {
       'tt0076759',
     )
     expect(response.body.map((movie) => movie.release_year)).not.toContain(2010)
+    expect(response.body.map((movie) => movie.release_year)).toBeDistinct()
   })
 })
