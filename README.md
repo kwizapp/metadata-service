@@ -68,9 +68,9 @@ The `metadata-service` API provides two main modes of operation:
 
 `/?imdbId=<id>`
 
-| Parameter       | Type      |  Default  | Description                                                                                                                   |
-|:----------------|:----------|:---------:|:------------------------------------------------------------------------------------------------------------------------------|
-| `imdbId`        | `ImdbID`  | undefined | Optional. IMDb ID, uniquely identifies a movie. The service will return random movie(s) if the parameter is not given.        |
+| Parameter | Type     |  Default  | Description                                                                                                            |
+| :-------- | :------- | :-------: | :--------------------------------------------------------------------------------------------------------------------- |
+| `imdbId`  | `ImdbID` | undefined | Optional. IMDb ID, uniquely identifies a movie. The service will return random movie(s) if the parameter is not given. |
 
 **Example:**
 
@@ -108,11 +108,13 @@ The `metadata-service` API provides two main modes of operation:
 
 `/?numMovies=<MovieCount>&differentFrom=<OtherImdbID>&notReleasedIn=<ReleaseYear>`
 
-| Parameter       | Type      |  Default  | Description                                                                            |
-|:----------------|:----------|:---------:|:---------------------------------------------------------------------------------------|
-| `numMovies`     | `Integer` |     1     | Optional. Defines how many results should be fetched when fetching random movies.                             |
-| `differentFrom` | `ImdbID`  | undefined | Optional. Defines a base `ImdbID` that will not be included in any random results.     |
-| `notReleasedIn` | `Integer` | undefined | Optional. Defines a release year that movies in the random results should not be from. |
+| Parameter       | Type      |  Default  | Description                                                                               |
+| :-------------- | :-------- | :-------: | :---------------------------------------------------------------------------------------- |
+| `numMovies`     | `Integer` |     1     | Optional. Defines how many results should be fetched when fetching random movies.         |
+| `differentFrom` | `ImdbID`  | undefined | Optional. Defines a base `ImdbID` that will not be included in any random results.        |
+| `notReleasedIn` | `Integer` | undefined | Optional. Defines a release year that movies in the random results should not be from. \* |
+
+_* If `notReleasedIn` is specified, the random results will have distinct release years (i.e., the release year will be different from the specified release year and there will not be two random results having the same release year.)._
 
 ## Test
 
