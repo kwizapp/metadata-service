@@ -22,7 +22,7 @@ function connectDb() {
 async function fetchRandomMovieIds(client, numIds, filters) {
   // compose a query with filters (POC)
   // TODO: write this in a more extendable fashion
-  let movieIdQuery = 'SELECT imdb_id FROM movies'
+  let movieIdQuery = 'SELECT imdb_id, release_year FROM movies'
   let queryValues = []
   if (filters) {
     if (filters.differentFrom) {
@@ -48,12 +48,21 @@ async function fetchRandomMovieIds(client, numIds, filters) {
   let rows = queryResult.rows
   for (let i = 0; i < numIds; i++) {
     const randomIndex = Math.floor(Math.random() * rows.length)
+    const randomRow = rows[randomIndex]
 
     // append the random row to the selection
-    randomIds = append(rows[randomIndex].imdb_id, randomIds)
+    randomIds = append(randomRow.imdb_id, randomIds)
 
     // remove the extracted id from the rows to prevent duplicates
     rows = remove(randomIndex, 1, rows)
+
+    // remove all rows having the same release year
+    // to prevent two random movies from having the same release year
+    // Note: this restriction is bound to the constraint that all random movies
+    //       should have different release years than the specified movie
+    if (filters.notReleasedIn) {
+      rows = rows.filter((row) => row.release_year !== randomRow.release_year)
+    }
   }
 
   return randomIds
