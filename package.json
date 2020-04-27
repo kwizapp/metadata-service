@@ -31,7 +31,7 @@
     "micro": "9.3.4",
     "pg": "7.18.2",
     "ramda": "0.27.0",
-    "yup": "0.28.3"
+    "yup": "0.28.4"
   },
   "devDependencies": {
     "@kwizapp/eslint-config-js": "0.0.8",
