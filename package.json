@@ -37,7 +37,7 @@
     "@kwizapp/eslint-config-js": "0.0.8",
     "@kwizapp/prettier-config": "0.0.8",
     "eslint": "6.8.0",
-    "eslint-config-prettier": "6.10.1",
+    "eslint-config-prettier": "6.11.0",
     "eslint-plugin-prettier": "3.1.2",
     "jest": "25.1.0",
     "micro-dev": "3.0.0",
