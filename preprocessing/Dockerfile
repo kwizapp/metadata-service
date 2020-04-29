@@ -1,13 +1,20 @@
 FROM continuumio/miniconda3:4.8.2
 
-WORKDIR /app
-
+ENV DATABASE_HOSTNAME=
 ENV DATABASE_URL=
 ENV POSTER_SERVICE_URL=
 
-ADD environment.yml .
+# setup the conda environment
+COPY environment.yml /app/environment.yml
+WORKDIR /app
 RUN set -x && conda env update --name base --file environment.yml
 
+# inject start scripts
+ADD https://raw.githubusercontent.com/eficode/wait-for/f71f8199a0dd95953752fb5d3f76f79ced16d47d/wait-for /wait-for.sh
+COPY run.sh /run.sh
+RUN set -x && chmod u+x /wait-for.sh /run.sh
+
+# inject the preprocessing script
 ADD Preprocessing.py .
 
-CMD ["python", "Preprocessing.py"]
+CMD ["/run.sh"]
