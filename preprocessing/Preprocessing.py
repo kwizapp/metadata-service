@@ -1,7 +1,6 @@
 import requests
 import os
 import pandas as pd
-import urllib
 import zipfile
 
 from sqlalchemy import create_engine
@@ -23,8 +22,11 @@ except:
     raise ConnectionError()
 
 print("> Downloading movie dataset")
-urllib.urlretrieve("https://www.dropbox.com/s/onvw7qkze0fx0w7/the-movies-dataset.zip?dl=1", "movies.zip")
+with open("movies.zip", "wb") as file:
+    response = requests.get("https://www.dropbox.com/s/onvw7qkze0fx0w7/the-movies-dataset.zip?dl=1")
+    file.write(response.content)
 
+print("> Unzipping movie dataset")
 with zipfile.ZipFile("movies.zip", 'r') as zip_ref:
     zip_ref.extractall(".")
 
