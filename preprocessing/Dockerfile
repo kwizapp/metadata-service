@@ -4,6 +4,9 @@ ENV DATABASE_HOSTNAME=
 ENV DATABASE_URL=
 ENV POSTER_SERVICE_URL=
 
+# install the netcat dependency for the wait script
+RUN set -x && apt-get -y install netcat
+
 # setup the conda environment
 COPY environment.yml /app/environment.yml
 WORKDIR /app
@@ -15,6 +18,6 @@ COPY run.sh /run.sh
 RUN set -x && chmod u+x /wait-for.sh /run.sh
 
 # inject the preprocessing script
-ADD Preprocessing.py .
+COPY Preprocessing.py .
 
-CMD ["/run.sh"]
+CMD "/run.sh"
