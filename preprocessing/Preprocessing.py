@@ -1,6 +1,8 @@
 import requests
 import os
 import pandas as pd
+import urllib
+import zipfile
 
 from sqlalchemy import create_engine
 from dotenv import load_dotenv
@@ -8,10 +10,10 @@ from dotenv import load_dotenv
 load_dotenv()
 
 DATABASE_URL = os.getenv("DATABASE_URL")
-assert DATABASE_URL is not None
+assert DATABASE_URL != ""
 
 POSTER_SERVICE_URL = os.getenv('POSTER_SERVICE_URL')
-assert POSTER_SERVICE_URL is not None
+assert POSTER_SERVICE_URL != ""
 
 # try to fetch a random movie to ensure the poster service is working
 try:
@@ -20,8 +22,14 @@ try:
 except:
     raise ConnectionError()
 
+print("> Downloading movie dataset")
+urllib.urlretrieve("https://www.dropbox.com/s/onvw7qkze0fx0w7/the-movies-dataset.zip?dl=1", "movies.zip")
+
+with zipfile.ZipFile("movies.zip", 'r') as zip_ref:
+    zip_ref.extractall(".")
+
 # import dataset
-movies_meta = pd.read_csv("datasets/the-movies-dataset/movies_metadata.csv")
+movies_meta = pd.read_csv("movies_metadata.csv")
 
 # filter out foreign movies (not en or de)
 movies_meta = movies_meta[movies_meta.original_language.isin(["en", "de"])]
