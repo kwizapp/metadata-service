@@ -29,7 +29,7 @@ module.exports = async (req) => {
   }
 
   // setup a database connection
-  const client = dbService.connectDb()
+  const client = await dbService.connectDb()
 
   // if an imdb id has been passed, fetch the requested movie metadata
   if (typeof transformedQuery.imdbId !== 'undefined') {

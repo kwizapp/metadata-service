@@ -4,15 +4,18 @@ const { append, remove } = require('ramda')
 
 require('dotenv').config()
 
-function connectDb() {
+async function connectDb() {
   const client = new Client({
     connectionString: process.env.DATABASE_URL,
-    ssl: process.env.DATABASE_SSL === 'true',
+    ssl: {
+      rejectUnauthorized: false,
+    },
   })
 
   try {
-    client.connect()
+    await client.connect()
   } catch (e) {
+    console.error(e.message)
     throw createError(500, 'DB_CONNECTION_FAILURE')
   }
 
