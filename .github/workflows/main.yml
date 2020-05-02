@@ -38,6 +38,7 @@ jobs:
         env:
           CI: 'true'
           DATABASE_URL: ${{secrets.DATABASE_URL}}
+          DATABASE_SSL: 'true'
 
   build_docker_hub:
     runs-on: ubuntu-latest
