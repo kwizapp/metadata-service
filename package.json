@@ -1,6 +1,6 @@
 {
   "name": "metadata-service",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "Movie metadata microservice for usage by Kwiz",
   "repository": {
     "type": "git",
