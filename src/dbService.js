@@ -7,7 +7,7 @@ require('dotenv').config()
 function connectDb() {
   const client = new Client({
     connectionString: process.env.DATABASE_URL,
-    ssl: false,
+    ssl: process.env.DATABASE_SSL === 'true',
   })
 
   try {
