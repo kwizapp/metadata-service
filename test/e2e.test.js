@@ -3,11 +3,10 @@ const request = require('supertest')
 
 const server = require('../src/index')
 
-const Set = require('core-js/features/set')
-
 // based on: https://stackoverflow.com/questions/57001262/jest-expect-only-unique-elements-in-an-array
 expect.extend({
   toBeDistinct(received) {
+    // eslint-disable-next-line no-undef
     return Array.isArray(received) && new Set(received).size === received.length
       ? {
           message: () => `expected [${received}] array is unique`,

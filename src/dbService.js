@@ -7,7 +7,7 @@ require('dotenv').config()
 function connectDb() {
   const client = new Client({
     connectionString: process.env.DATABASE_URL,
-    ssl: true,
+    ssl: false,
   })
 
   try {
@@ -42,6 +42,7 @@ async function fetchRandomMovieIds(client, numIds, filters) {
 
   // get all movie ids that match the above filter
   const queryResult = await client.query(movieIdQuery, queryValues)
+  console.log(`> Received query result: ${queryResult}`)
 
   // select numIds random ids from the list of ids
   let randomIds = []

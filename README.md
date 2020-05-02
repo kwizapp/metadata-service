@@ -74,7 +74,7 @@ The `metadata-service` API provides two main modes of operation:
 
 **Example:**
 
-`http://localhost:3000/?id=tt3450958`
+`http://localhost:3000/?imdbId=tt3450958`
 
 **Returns:**
 
@@ -114,7 +114,7 @@ The `metadata-service` API provides two main modes of operation:
 | `differentFrom` | `ImdbID`  | undefined | Optional. Defines a base `ImdbID` that will not be included in any random results.        |
 | `notReleasedIn` | `Integer` | undefined | Optional. Defines a release year that movies in the random results should not be from. \* |
 
-_* If `notReleasedIn` is specified, the random results will have distinct release years (i.e., the release year will be different from the specified release year and there will not be two random results having the same release year.)._
+_\* If `notReleasedIn` is specified, the random results will have distinct release years (i.e., the release year will be different from the specified release year and there will not be two random results having the same release year.)._
 
 ## Test
 
