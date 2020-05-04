@@ -15,9 +15,7 @@ This service is responsible for returning metadata for specific movies. It uses 
 
 **Dataset**
 
-1. Download the required [dataset](https://www.kaggle.com/rounakbanik/the-movies-dataset)
-2. Create a folder `datasets/` in the root folder
-3. Extract the `the-movies-dataset.zip` into `datasets/the-movies-dataset/`
+This [dataset](https://www.kaggle.com/rounakbanik/the-movies-dataset) is used.
 
 **Python**
 
@@ -25,12 +23,14 @@ This service is responsible for returning metadata for specific movies. It uses 
    You can run the following to create and activate a conda environment directly with all the required dependencies specified
 
    ```python
+   cd preprocessing
    conda env create -f environment.yml
    conda activate metadata-service
    ```
 
 2. Ensure that `DATABASE_URL` in `.env` is set to a valid and complete URL
-3. Run the database hydration script with `python Preprocessing.py`
+3. Run `_run.sh` script from the [Kwiz Repository](https://github.com/kwizapp/kwiz) to have the database ready.
+4. Run the database hydration script with `python Preprocessing.py`
 
 ### Login to NPM registry
 
@@ -44,10 +44,6 @@ After that, `npm install` should run without any problems.
 ### Environment Variables
 
 - Create a `.env` file based on `.env.template`
-- Add the `DATABASE_URL` to `.env`
-  - You can get the url from heroku inside the `metadata-service` app addons
-- Set the `POSTER_SERVICE_URL` to link to a running instance of the `poster-service`
-  - E.g., `http://localhost:3000`
 
 ### Local dev with `micro-dev`
 
@@ -55,7 +51,7 @@ After that, `npm install` should run without any problems.
 npm run start
 ```
 
-This will the micro HTTP service on PORT 3000.
+This will the micro HTTP service on PORT 3003.
 
 ## API
 
@@ -74,7 +70,7 @@ The `metadata-service` API provides two main modes of operation:
 
 **Example:**
 
-`http://localhost:3000/?id=tt3450958`
+`http://localhost:3003/?imdbId=tt3450958`
 
 **Returns:**
 
@@ -114,7 +110,7 @@ The `metadata-service` API provides two main modes of operation:
 | `differentFrom` | `ImdbID`  | undefined | Optional. Defines a base `ImdbID` that will not be included in any random results.        |
 | `notReleasedIn` | `Integer` | undefined | Optional. Defines a release year that movies in the random results should not be from. \* |
 
-_* If `notReleasedIn` is specified, the random results will have distinct release years (i.e., the release year will be different from the specified release year and there will not be two random results having the same release year.)._
+_\* If `notReleasedIn` is specified, the random results will have distinct release years (i.e., the release year will be different from the specified release year and there will not be two random results having the same release year.)._
 
 ## Test
 

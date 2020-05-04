@@ -1,6 +1,7 @@
 import requests
 import os
 import pandas as pd
+import zipfile
 
 from sqlalchemy import create_engine
 from dotenv import load_dotenv
@@ -8,10 +9,10 @@ from dotenv import load_dotenv
 load_dotenv()
 
 DATABASE_URL = os.getenv("DATABASE_URL")
-assert DATABASE_URL is not None
+assert DATABASE_URL != ""
 
 POSTER_SERVICE_URL = os.getenv('POSTER_SERVICE_URL')
-assert POSTER_SERVICE_URL is not None
+assert POSTER_SERVICE_URL != ""
 
 # try to fetch a random movie to ensure the poster service is working
 try:
@@ -20,8 +21,19 @@ try:
 except:
     raise ConnectionError()
 
+print("> Downloading movie dataset")
+with open("movies.zip", "wb") as file:
+    response = requests.get("https://www.dropbox.com/s/onvw7qkze0fx0w7/the-movies-dataset.zip?dl=1")
+    file.write(response.content)
+
+print("> Unzipping movie dataset")
+with zipfile.ZipFile("movies.zip", 'r') as zip_ref:
+    zip_ref.extractall(".")
+
 # import dataset
-movies_meta = pd.read_csv("datasets/the-movies-dataset/movies_metadata.csv")
+movies_meta = pd.read_csv("movies_metadata.csv")
+
+print("> Filtering movies")
 
 # filter out foreign movies (not en or de)
 movies_meta = movies_meta[movies_meta.original_language.isin(["en", "de"])]
@@ -89,6 +101,7 @@ top50_all = pd.concat([top50_until_1990, top50_until_2005, top50_until_2020])
 
 
 # check all movies in the top50 for consistency with omdb
+print("> Checking consistency against OMDB")
 def check_omdb_existence(row):
     try:
         result = requests.get(f"{POSTER_SERVICE_URL}/?id={row['imdb_id']}")
@@ -103,6 +116,7 @@ def check_omdb_existence(row):
 
 top50_all["omdb_consistent"] = top50_all.apply(check_omdb_existence, axis=1)
 
+print("> Hydrating database")
 try:
     # setup a database connection
     engine = create_engine(DATABASE_URL, echo=True)

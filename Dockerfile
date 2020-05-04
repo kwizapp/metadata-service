@@ -1,26 +1,35 @@
-FROM node:12-alpine AS builder
+# --- DEPENDENCIES ---
+FROM node:14-alpine AS deps
 
 ARG NODE_AUTH_TOKEN
 
 # inject and install dependencies
-COPY --chown=1000:0 package.json package-lock.json .npmrc /app/
+COPY --chown=1000:0 package.json package-lock.json /app/
+COPY .npmrc.ci /app/.npmrc
 WORKDIR /app
 RUN set -x && npm ci
 
-# extend basic alpine image
-FROM node:12-alpine
+# --- RUNTIME ---
+FROM node:14-alpine
 
-# switch to a non-root user
-USER 1000
+ENV DATABASE_HOSTNAME=
+ENV DATABASE_URL=
+ENV PORT=3003
+ENV POSTER_SERVICE_URL=
 
-# inject and install dependencies
-WORKDIR /app
-COPY --from=builder --chown=1000:0 /app/node_modules .
+# inject dependencies
+COPY --from=deps --chown=1000:0 /app/node_modules /app/node_modules
 
 # inject service logic
+COPY --chown=1000:0 package.json /app/package.json
 COPY --chown=1000:0 src /app/src
 COPY --chown=1000:0 serve.sh /serve.sh
 RUN set -x && chmod u+x /serve.sh
 
+# switch to a non-root user
+USER 1000
+
 # start the micro server on a dynamic port (as required by Heroku)
 CMD ["/serve.sh"]
+
+HEALTHCHECK --interval=30s --timeout=30s --start-period=5s --retries=3 CMD [ "curl", '-f', 'http://localhost:${PORT}' ]

@@ -1,6 +1,6 @@
 {
   "name": "metadata-service",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "Movie metadata microservice for usage by Kwiz",
   "repository": {
     "type": "git",
@@ -26,22 +26,21 @@
   },
   "dependencies": {
     "@kwizapp/kwiz-utils": "0.0.2",
-    "core-js": "3.6.4",
     "dotenv": "8.2.0",
     "micro": "9.3.4",
-    "pg": "7.18.2",
+    "pg": "8.0.3",
     "ramda": "0.27.0",
-    "yup": "0.28.3"
+    "yup": "0.28.5"
   },
   "devDependencies": {
-    "@kwizapp/eslint-config-js": "0.0.8",
-    "@kwizapp/prettier-config": "0.0.8",
+    "@kwizapp/eslint-config-js": "0.0.10",
+    "@kwizapp/prettier-config": "0.0.10",
     "eslint": "6.8.0",
-    "eslint-config-prettier": "6.10.1",
-    "eslint-plugin-prettier": "3.1.2",
-    "jest": "25.1.0",
+    "eslint-config-prettier": "6.11.0",
+    "eslint-plugin-prettier": "3.1.3",
+    "jest": "25.5.4",
     "micro-dev": "3.0.0",
-    "prettier": "2.0.1",
+    "prettier": "2.0.5",
     "supertest": "5.0.0-0"
   },
   "jest": {

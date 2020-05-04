@@ -4,4 +4,4 @@
 !package-lock.json
 !package.json
 !serve.sh
-!.npmrc
+!.npmrc.ci
