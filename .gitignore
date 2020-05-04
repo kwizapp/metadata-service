@@ -1,5 +1,6 @@
 node_modules/
-datasets/
+preprocessing/*.csv
+preprocessing/*.zip
 .ipynb_checkpoints/
 
 .env
