@@ -7,9 +7,12 @@ require('dotenv').config()
 async function connectDb() {
   const client = new Client({
     connectionString: process.env.DATABASE_URL,
-    ssl: {
-      rejectUnauthorized: false,
-    },
+    ssl:
+      process.env.DATABASE_SSL === 'true'
+        ? {
+            rejectUnauthorized: false,
+          }
+        : undefined,
   })
 
   try {
