@@ -62,7 +62,7 @@ This will start the micro HTTP service on PORT 3003.
 
 ## API
 
-Please consult the [wiki](https://github.com/kwizapp/kwiz/wiki/API-Reference) for the API documentation and examples.
+Please consult the [wiki](https://github.com/kwizapp/kwiz/wiki/API-Reference#metadata-service) for the API documentation and examples.
 
 ## Test
 
