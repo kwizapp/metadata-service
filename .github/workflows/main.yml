@@ -60,7 +60,7 @@ jobs:
   build_heroku:
     runs-on: ubuntu-latest
     needs: test
-    if: github.ref == 'refs/heads/dev' || github.ref == 'refs/heads/master'
+    if: github.ref == 'refs/heads/master'
 
     steps:
       - uses: actions/checkout@v2
@@ -79,7 +79,7 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     needs: [test, build_heroku]
-    if: github.ref == 'refs/heads/dev' || github.ref == 'refs/heads/master'
+    if: github.ref == 'refs/heads/master'
 
     steps:
       - name: Login to Heroku
