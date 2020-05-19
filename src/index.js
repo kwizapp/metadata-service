@@ -5,6 +5,8 @@ const { parse } = require('url')
 const dbService = require('./dbService')
 const { isImdbIdValid } = require('./utils')
 
+// defines the shape of possible query parameters
+// - is used to validate incoming queries
 const queryValidator = yup.object().shape({
   imdbId: yup
     .string()
@@ -16,6 +18,9 @@ const queryValidator = yup.object().shape({
   notReleasedIn: yup.number(),
 })
 
+/**
+ * Main entry point
+ */
 module.exports = async (req) => {
   // try to extract query params from the request URL
   const { query } = parse(req.url, true)
@@ -47,6 +52,7 @@ module.exports = async (req) => {
     differentFrom: query.differentFrom,
     notReleasedIn: query.notReleasedIn,
   }
+
   try {
     return dbService.fetchRandomMovies(
       client,
