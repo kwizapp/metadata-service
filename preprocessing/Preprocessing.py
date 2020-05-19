@@ -93,11 +93,11 @@ movies_until_1990 = movies_meta[movies_meta["date_segment"] == 0]
 movies_until_2005 = movies_meta[movies_meta["date_segment"] == 1]
 movies_until_2020 = movies_meta[movies_meta["date_segment"] == 2]
 
-# extract top50 from all segments
-top50_until_1990 = movies_until_1990.iloc[0:50]
-top50_until_2005 = movies_until_2005.iloc[0:50]
-top50_until_2020 = movies_until_2020.iloc[0:50]
-top50_all = pd.concat([top50_until_1990, top50_until_2005, top50_until_2020])
+# extract top movies from all segments
+top_until_1990 = movies_until_1990.iloc[0:200]
+top_until_2005 = movies_until_2005.iloc[0:200]
+top_until_2020 = movies_until_2020.iloc[0:200]
+top_all = pd.concat([top_until_1990, top_until_2005, top_until_2020])
 
 
 # check all movies in the top50 for consistency with omdb
@@ -114,7 +114,7 @@ def check_omdb_existence(row):
         return False
 
 
-top50_all["omdb_consistent"] = top50_all.apply(check_omdb_existence, axis=1)
+top_all["omdb_consistent"] = top_all.apply(check_omdb_existence, axis=1)
 
 print("> Hydrating database")
 try:
@@ -122,8 +122,8 @@ try:
     engine = create_engine(DATABASE_URL, echo=True)
 
     # write the results to the database
-    top50_all = top50_all.set_index("imdb_id")
-    top50_all[top50_all["omdb_consistent"]].to_sql(
+    top_all = top_all.set_index("imdb_id")
+    top_all[top_all["omdb_consistent"]].to_sql(
         "movies", con=engine, if_exists="replace"
     )
 
