@@ -2,13 +2,24 @@
 
 This service is responsible for returning metadata for specific movies. It uses a `Heroku-Postgres` database that stores all data related to the movies. If an `ImdbID` is passed as an explicit parameter, the given movie is fetched; alternatively, the service fetches random movies from the database. Filters and the number of random movies can be specified with additional parameters.
 
+## Repository Structure
+
+| Directory          | Description                                            |
+| ------------------ | ------------------------------------------------------ |
+| `src/index.js`     | Main entry point for the HTTP server                   |
+| `src/utils.js`     | Helper functions                                       |
+| `src/dbService.js` | Postgres database connection                           |
+| `preprocessing`    | Database data preprocessing and hydration using Python |
+| `test`             | e2e testing with [jest](https://jestjs.io/)            |
+
 ## Development
 
 This service depends on the following:
-* `Postgres` database
-* Hydration (fill database with dataset)
-* GitHub Access Token that can read packages (`read:packages`)
-* `.env` file created from `.env.template`
+
+- `Postgres` database
+- Hydration (fill database with dataset)
+- GitHub Access Token that can read packages (`read:packages`)
+- `.env` file created from `.env.template`
 
 ### Database
 
