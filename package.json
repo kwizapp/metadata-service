@@ -29,7 +29,7 @@
     "dotenv": "8.2.0",
     "micro": "9.3.4",
     "pg": "8.2.1",
-    "ramda": "0.27.0",
+    "ramda": "0.27.1",
     "yup": "0.28.5"
   },
   "devDependencies": {
